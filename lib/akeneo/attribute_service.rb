@@ -4,8 +4,12 @@ require_relative './service_base.rb'
 
 module Akeneo
   class AttributeService < ServiceBase
-    def all
-      response = get_request("/attributes")
+    def all(page=nil, limit=100)
+      request_url = "/attributes?with_count=true"
+      request_url = request_url + "&page=#{page}" if page
+      request_url = request_url + "&limit=#{limit}"
+
+      response = get_request(request)
 
       response.parsed_response if response.success?
     end
