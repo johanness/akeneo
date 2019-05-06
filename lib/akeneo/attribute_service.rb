@@ -5,13 +5,16 @@ require_relative './service_base.rb'
 module Akeneo
   class AttributeService < ServiceBase
     def all(page=nil, limit=100)
-      request_url = "/attributes?with_count=true"
-      request_url = request_url + "&page=#{page}" if page
-      request_url = request_url + "&limit=#{limit}"
+      Enumerator.new do |attributes|
+        request_url = "/attributes"
 
-      response = get_request(request_url)
-
-      response.parsed_response if response.success?
+        loop do
+          response = get_request(request_url)
+          extract_collection_items(response).each { |attribute| attributes << attribute }
+          request_url = extract_next_page_path(response)
+          break unless request_url
+        end
+      end
     end
 
     def find(code)

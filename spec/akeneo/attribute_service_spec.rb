@@ -11,19 +11,8 @@ describe Akeneo::AttributeService do
     let(:request_url) { "http://akeneo.api/api/rest/v1/attributes" }
     let(:response_body) { 
       {
-        "_links": {},
-        "current_page": 1,
-        "_embedded": {
-          "items": [
-            "_links": {
-              "self": {
-                "href": "https://any-url-sandbox-akeneo.api"
-              }
-            },
-            "code": "code",
-            "type": "type",
-            "group": "group"
-          ]
+        '_embedded' => {
+          'items' => []
         }
       }.to_json
     }
@@ -39,7 +28,9 @@ describe Akeneo::AttributeService do
     end
 
     it 'makes all attributes request' do
-      service.all
+      attributes = service.all
+
+      attributes.each(&:inspect)
 
       expect(WebMock).to have_requested(
         :get,
@@ -50,8 +41,7 @@ describe Akeneo::AttributeService do
     it 'it returns the response body with items key' do
       response = service.all
 
-      expect(response).to have_key("_embedded")
-      expect(response["_embedded"]).to have_key("items")
+      expect(response).to be_a(Enumerator)
     end
   end
 
