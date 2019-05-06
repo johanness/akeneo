@@ -9,7 +9,7 @@ module Akeneo
       request_url = request_url + "&page=#{page}" if page
       request_url = request_url + "&limit=#{limit}"
 
-      response = get_request(request)
+      response = get_request(request_url)
 
       response.parsed_response if response.success?
     end
