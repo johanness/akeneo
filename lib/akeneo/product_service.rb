@@ -44,6 +44,10 @@ module Akeneo
       patch_request("/products/#{code}", body: options.to_json)
     end
 
+    def create(product_object)
+      patch_request("/products", body: product_object.to_json)
+    end
+
     private
 
     def build_path(family, completeness, updated_after)
