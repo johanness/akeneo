@@ -60,16 +60,17 @@ module Akeneo
       )
     end
 
-    def patch_request(path, options = {}, is_create=false)
-      if is_create
-        header = create_request_headers
-      else
-        header = default_request_headers
-      end
-      
+    def patch_request(path, options = {})
       HTTParty.patch(
         "#{@url}/api/rest/v1#{path}",
-        options.merge(headers: header)
+        options.merge(headers: default_request_headers)
+      )
+    end
+
+    def patch_for_create_request(path, options = {})
+      HTTParty.patch(
+        "#{@url}/api/rest/v1#{path}",
+        options.merge(headers: create_request_headers)
       )
     end
 
