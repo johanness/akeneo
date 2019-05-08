@@ -37,12 +37,20 @@ module Akeneo
       { 'Content-Type' => 'application/json' }
     end
 
+    def akeneo_collection_headers
+      { 'Content-Type' => 'application/vnd.akeneo.collection+json' }
+    end
+
     def authorization_headers
       { 'Authorization' => "Bearer #{@access_token}" }
     end
 
     def default_request_headers
       authorization_headers.merge(json_headers)
+    end
+
+    def create_request_headers
+      authorization_headers.merge(akeneo_collection_headers)
     end
 
     def get_request(path, options = {})
@@ -52,10 +60,16 @@ module Akeneo
       )
     end
 
-    def patch_request(path, options = {})
+    def patch_request(path, options = {}, is_create=false)
+      if is_create
+        header = create_request_headers
+      else
+        header = default_request_headers
+      end
+      
       HTTParty.patch(
         "#{@url}/api/rest/v1#{path}",
-        options.merge(headers: default_request_headers)
+        options.merge(headers: header)
       )
     end
 
