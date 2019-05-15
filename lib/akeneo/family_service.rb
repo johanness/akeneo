@@ -6,7 +6,7 @@ module Akeneo
   class FamilyService < ServiceBase
     def all
       Enumerator.new do |families|
-        request_url = "/families"
+        request_url = '/families'
 
         loop do
           response = get_request(request_url)

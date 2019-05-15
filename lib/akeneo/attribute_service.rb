@@ -4,9 +4,9 @@ require_relative './service_base.rb'
 
 module Akeneo
   class AttributeService < ServiceBase
-    def all(page=nil, limit=100)
+    def all
       Enumerator.new do |attributes|
-        request_url = "/attributes"
+        request_url = '/attributes'
 
         loop do
           response = get_request(request_url)
