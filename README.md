@@ -37,6 +37,13 @@ In this case, returns message too
 "{"line":1,"identifier":"bot","status_code":422,"message":"Validation failed.","errors":[{"property":"values","message":"The value Top 2 vezes is already set on another product for the unique attribute nome_marketing","attribute":"nome_marketing","locale":null,"scope":null}]}"
 ```
 
+Returns options from attribute
+```
+options = client.attribute_service.options(codigo_do_atributo)
+
+options["_embedded"]["items"].map{|a| [a['code'], a['labels']]}
+```
+
 ## Configuration
 
 ### Caching
