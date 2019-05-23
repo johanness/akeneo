@@ -8,7 +8,7 @@ describe Akeneo::AttributeService do
   let(:service)      { described_class.new(url: url, access_token: access_token) }
 
   describe '#all' do
-    let(:request_url) { 'http://akeneo.api/api/rest/v1/attributes' }
+    let(:request_url) { 'http://akeneo.api/api/rest/v1/attributes?limit=100' }
     let(:response_body) do
       {
         '_embedded' => {
@@ -34,7 +34,7 @@ describe Akeneo::AttributeService do
 
       expect(WebMock).to have_requested(
         :get,
-        'http://akeneo.api/api/rest/v1/attributes'
+        'http://akeneo.api/api/rest/v1/attributes?limit=100'
       )
     end
 
