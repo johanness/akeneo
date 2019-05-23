@@ -6,7 +6,7 @@ module Akeneo
   class AttributeService < ServiceBase
     def all
       Enumerator.new do |attributes|
-        request_url = '/attributes'
+        request_url = "/attributes?#{limit_param}"
 
         loop do
           response = get_request(request_url)
